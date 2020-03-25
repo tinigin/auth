@@ -20,7 +20,7 @@ class Instagram extends \SocialConnect\OAuth2\AbstractProvider
      */
     public function getBaseUri()
     {
-        return 'https://api.instagram.com/v1/';
+        return 'https://graph.instagram.com/';
     }
 
     /**
@@ -52,17 +52,20 @@ class Instagram extends \SocialConnect\OAuth2\AbstractProvider
      */
     public function getIdentity(AccessTokenInterface $accessToken)
     {
-        $response = $this->request('GET', 'users/self', [], $accessToken);
+        $query = [];
 
+        $fields = $this->getArrayOption('identity.fields', []);
+        if ($fields) {
+            $query['fields'] = implode(',', $fields);
+        }
+
+        $response = $this->request('GET', 'me', $query, $accessToken);
+        
         $hydrator = new ArrayHydrator([
             'id' => 'id',
             'username' => 'username',
-            'bio' => 'bio',
-            'website' => 'website',
-            'profile_picture' => 'pictureURL',
-            'full_name' => 'fullname'
         ]);
 
-        return $hydrator->hydrate(new User(), $response['data']);
+        return $hydrator->hydrate(new User(), $response);
     }
 }

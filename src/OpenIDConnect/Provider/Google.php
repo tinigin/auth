@@ -94,7 +94,7 @@ class Google extends AbstractProvider
     public function getIdentity(AccessTokenInterface $accessToken)
     {
         $response = $this->request('GET', 'oauth2/v1/userinfo', [], $accessToken);
-
+        
         $hydrator = new ArrayHydrator([
             'id' => 'id',
             'given_name' => 'firstname',
@@ -105,6 +105,7 @@ class Google extends AbstractProvider
             'gender' => static function ($value, User $user) {
                 $user->setSex($value);
             },
+            'picture' => 'picture'
         ]);
 
         return $hydrator->hydrate(new User(), $response);

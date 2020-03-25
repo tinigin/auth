@@ -67,6 +67,7 @@ class Yandex extends \SocialConnect\OAuth2\AbstractProvider
         $result = $this->request('GET', 'info', [], $accessToken);
 
         $hydrator = new ArrayHydrator([
+            'id' => 'id',
             'first_name' => 'firstname',
             'last_name' => 'lastname',
             'default_email' => 'email',
@@ -77,6 +78,7 @@ class Yandex extends \SocialConnect\OAuth2\AbstractProvider
                 );
             },
             'login' => 'username',
+            'default_avatar_id' => 'picture_id'
         ]);
 
         return $hydrator->hydrate(new User(), $result);

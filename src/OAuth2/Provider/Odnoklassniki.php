@@ -83,19 +83,21 @@ class Odnoklassniki extends \SocialConnect\OAuth2\AbstractProvider
         $parameters = [
             'application_key' => $this->consumer->getPublic(),
             'access_token' => $accessToken->getToken(),
-            'format' => 'json'
+            'format' => 'json',
+            'method' => 'users.getCurrentUser'
         ];
 
         $parameters['sig'] = $this->makeSecureSignature($parameters, $accessToken);
 
-        $response = $this->request('GET', 'users/getCurrentUser', [], $accessToken);
+        $response = $this->request('GET', 'users/getCurrentUser', $parameters, $accessToken);
 
         $hydrator = new ArrayHydrator([
             'uid' => 'id',
             'first_name' => 'firstname',
             'last_name' => 'lastname',
             'name' => 'fullname',
-            'pic_3' => 'pictureURL'
+            'pic_3' => 'pictureURL',
+            'email' => 'email'
         ]);
 
         return $hydrator->hydrate(new User(), $response);

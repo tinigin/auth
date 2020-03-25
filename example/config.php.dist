@@ -15,7 +15,11 @@ return [
                 'identity.fields' => [
                     'email',
                     'name',
-                    'picture.width(99999)'
+                    'first_name',
+                    'last_name',
+                    'gender',
+                    'birthday',
+                    'picture'
                 ],
             ]
         ],
@@ -56,6 +60,8 @@ return [
                     'sex',
                     'screen_name',
                     'photo_max_orig',
+                    'email',
+                    'bdate'
                 ]
             ]
         ],
@@ -77,6 +83,17 @@ return [
         'instagram' => [
             'applicationId' => '',
             'applicationSecret' => '',
+            'scope' => [
+                    'user_profile'
+                ],
+                'options' => [
+                    'identity.fields' => [
+                        'id',
+                        'username',
+                        'account_type',
+                        'media'
+                    ],
+                ],
         ],
         'slack' => [
             'applicationId' => '',
@@ -131,7 +148,9 @@ return [
         'mail-ru' => [
             'applicationId' => '',
             'applicationSecret' => '',
-            'scope' => []
+            'scope' => [
+                'userinfo'
+            ]
         ],
         //http://api.mail.ru/sites/my/add
         'odnoklassniki' => [
@@ -139,7 +158,8 @@ return [
             'applicationSecret' => '',
             'applicationPublic' => '',
             'scope' => [
-                'GET_EMAIL'
+                'GET_EMAIL',
+                'VALUABLE_ACCESS'
             ]
         ],
         'steam' => [
