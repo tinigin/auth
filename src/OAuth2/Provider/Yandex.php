@@ -78,7 +78,9 @@ class Yandex extends \SocialConnect\OAuth2\AbstractProvider
                 );
             },
             'login' => 'username',
-            'default_avatar_id' => 'picture_id'
+            'default_avatar_id' => static function ($value, User $user) {
+                $user->pictureURL = 'https://avatars.mds.yandex.net/get-yapic/' . $value . '/islands-200';
+            }
         ]);
 
         return $hydrator->hydrate(new User(), $result);

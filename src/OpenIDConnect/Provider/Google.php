@@ -105,7 +105,7 @@ class Google extends AbstractProvider
             'gender' => static function ($value, User $user) {
                 $user->setSex($value);
             },
-            'picture' => 'picture'
+            'picture' => 'pictureURL'
         ]);
 
         return $hydrator->hydrate(new User(), $response);
